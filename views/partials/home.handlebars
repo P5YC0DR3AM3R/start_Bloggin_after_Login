@@ -1,0 +1,14 @@
+{{#extend "main"}}
+{{#block "content"}}
+    <h1>Recent Posts</h1>
+    {{#each posts}}
+        <div class="post">
+            <h2><a href="/post/{{this.id}}">{{this.title}}</a></h2>
+            <p>{{truncate this.body 120}} <a href="/post/{{this.id}}">Read more...</a></p>
+            <small>Posted on {{formatDate this.createdAt}}</small>
+        </div>
+    {{else}}
+        <p>No posts to display.</p>
+    {{/each}}
+{{/block}}
+{{/extend}}

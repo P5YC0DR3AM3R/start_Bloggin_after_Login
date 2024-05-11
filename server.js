@@ -1,13 +1,13 @@
 // Local Modules
 const routes = require('./controllers');
 const helpers = require('./utils/helpers');
+const authGuard = require('./utils/authGuard');  // Include authGuard middleware
 
 // Third-Party Modules
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
-
 
 const sequelize = require('./config/connection');
 // Create a new sequelize store using the express-session package
@@ -24,25 +24,20 @@ const hbs = exphbs.create({ helpers });
 // Sets up session and connect to our Sequelize db
 // Configure and link a session object with the sequelize store
 const sess = {
-  secret: 'Super secret secret',
-    // Express session will use cookies by default, but we can specify options for those cookies by adding a cookies property to our session options.
-  cookie: {
-        // maxAge sets the maximum age for the cookie to be valid. Here, the cookie (and session) will expire after one hour. The time should be given in milliseconds.
-    maxAge: 300000,
-        // httpOnly tells express-session to only store session cookies when the protocol being used to connect to the server is HTTP.
-    httpOnly: true,
-        // secure tells express-session to only initialize session cookies when the protocol being used is HTTPS. Having this set to true, and running a server without encryption will result in the cookies not showing up in your developer console.
-    secure: false,
-        // sameSite tells express-session to only initialize session cookies when the referrer provided by the client matches the domain out server is hosted from.
-    sameSite: 'strict',
-  },
-  resave: false,
-  saveUninitialized: true,
-    // Sets up session store
-  store: new SequelizeStore({
-    db: sequelize,
-  }),
+    secret: 'Super secret secret',
+    cookie: {
+        maxAge: 300000,  // Session expires after 300 seconds
+        httpOnly: true,
+        secure: false,  // Set to true if using https
+        sameSite: 'strict',
+    },
+    resave: false,
+    saveUninitialized: true,
+    store: new SequelizeStore({
+        db: sequelize,
+    }),
 };
+
 // Add express-session and store as Express.js middleware
 app.use(session(sess));
 
@@ -56,11 +51,13 @@ app.use(express.urlencoded({ extended: true }));
 // Static middleware pointing to the public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Servers the routes to the server
+// Apply authGuard middleware to protected routes
+app.use('/dashboard', authGuard);  // Protect the dashboard route
+
+// Serve the routes to the server
 app.use(routes);
 
-// Starts the server to begin listening
+// Start the server to begin listening
 sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log(`Now listening on http://localhost:${PORT}`));
+    app.listen(PORT, () => console.log(`Now listening on http://localhost:${PORT}`));
 });
-

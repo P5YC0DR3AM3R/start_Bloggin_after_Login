@@ -1,0 +1,9 @@
+{{#each comments}}
+    <div class="comment">
+        <p>{{this.content}}</p>
+        <small>Commented by {{this.author}} on {{formatDate this.createdAt}}</small>
+    </div>
+{{else}}
+    <p>No comments yet. Be the first to comment!</p>
+{{/each}}
+

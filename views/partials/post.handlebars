@@ -1,0 +1,14 @@
+{{#extend "main"}}
+{{#block "content"}}
+    <div class="post">
+        <h1>{{post.title}}</h1>
+        <p>{{post.body}}</p>
+        <small>Posted on {{formatDate post.createdAt}} by {{post.author}}</small>
+    </div>
+    {{#if user}}
+        <div class="comments">
+            {{> comments}}
+        </div>
+    {{/if}}
+{{/block}}
+{{/extend}}
