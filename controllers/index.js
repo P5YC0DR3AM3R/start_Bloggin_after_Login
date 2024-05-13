@@ -1,9 +1,12 @@
 const postController = require('./postController');
 const userController = require('./userController');
-// Import other controllers as needed
+const homeRoutes = require('./homeRoutes');
 
-module.exports = {
-  postController,
-  userController,
-  // Export other controllers
-};
+const express = require('express');
+const router = express.Router();
+
+router.use('/', postController);
+router.use('/', userController);
+router.use('/', homeRoutes);
+
+module.exports = router;

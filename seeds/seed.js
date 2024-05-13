@@ -5,8 +5,8 @@ const { User, Post, Comment } = require('../models');
 
 // Import all seeds
 const userData = require('./userData.js');
-const postData = require('../postData.json');
-const commentData = require('./commentData.js');
+const postData = require('./postData.json');
+const commentData = require('./commentData.json');
 
 // Asynchronous function to seed the database
 const seedDatabase = async () => {
@@ -25,7 +25,7 @@ const seedDatabase = async () => {
     console.log('Seeding posts...');
     const posts = await Post.bulkCreate(postData.map(post => ({
       title: post.title,
-      content: post.post_text, // Ensure this field is correctly mapped
+      content: post.content,
       userId: users.find(user => user.id === post.userId)?.id,
       createdAt: new Date(),
       updatedAt: new Date()
