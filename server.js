@@ -1,4 +1,3 @@
-// Local Modules
 const routes = require('./controllers');
 const helpers = require('./utils/helpers');
 const authGuard = require('./utils/authGuard');
@@ -8,6 +7,9 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/connection');
+const userRoutes = require('./controllers/userController');
+const postRoutes = require('./controllers/postController');
+
 const app = express();
 // Specify on which port the Express.js server will run
 const PORT = process.env.PORT || 3001;
