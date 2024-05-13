@@ -1,17 +1,26 @@
 {{#extend "main"}}
 {{#block "content"}}
     <h1>Sign Up</h1>
-    <form action="/api/users/signup" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-
-        <button type="submit">Sign Up</button>
+    <form class="signup-form" action="/api/users/signup" method="POST">
+    <div class="col-md-6">
+        <h2>Signup</h2>
+        <div class="form-group">
+            <label for="name-signup">name:</label>
+            <input class="form-input" type="text" id="name-signup" />
+        </div>
+        <div class="form-group">
+            <label for="email-signup">email:</label>
+            <input class="form-input" type="text" id="email-signup" />
+        </div>
+        <div class="form-group">
+            <label for="password-signup">password:</label>
+            <input class="form-input" type="password" id="password-signup" />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">signup</button>
+        </div>
+    </div>
     </form>
+    <script src="/js/signup.js"></script>
 {{/block}}
 {{/extend}}

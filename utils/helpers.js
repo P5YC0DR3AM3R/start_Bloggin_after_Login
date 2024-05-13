@@ -1,7 +1,16 @@
 module.exports = {
-  formatDate: (date) => {
-      return date.toLocaleDateString('en-US');
-  },
+    format_date: (date) => {
+        if (!date) {
+            return '';
+        }
+
+        const formattedDate = new Date(date);
+        if (isNaN(formattedDate)) {
+            return '';
+        }
+
+        return formattedDate.toLocaleDateString('en-US');
+    },
   truncate: (str, len) => {
       if (str.length > len && str.length > 0) {
           let new_str = str + " ";

@@ -1,25 +1,19 @@
 // Local Modules
 const routes = require('./controllers');
 const helpers = require('./utils/helpers');
-const authGuard = require('./utils/authGuard');  // Include authGuard middleware
-
-// Third-Party Modules
+const authGuard = require('./utils/authGuard');
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
-
-const sequelize = require('./config/connection');
-// Create a new sequelize store using the express-session package
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-
-// Initialize an instance of Express.js
+const sequelize = require('./config/connection');
 const app = express();
 // Specify on which port the Express.js server will run
 const PORT = process.env.PORT || 3001;
 
 // Set up Handlebars.js as the default engine with custom helpers
-const hbs = exphbs.create({ helpers });
+const hbs = exphbs.create({ helpers, partialsDir: path.join(__dirname, 'views/partials') });
 
 // Sets up session and connect to our Sequelize db
 // Configure and link a session object with the sequelize store
@@ -50,7 +44,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Static middleware pointing to the public folder
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(require('./controllers'));
 // Apply authGuard middleware to protected routes
 app.use('/dashboard', authGuard);  // Protect the dashboard route
 

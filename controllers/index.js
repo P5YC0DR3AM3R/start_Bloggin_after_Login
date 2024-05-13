@@ -6,7 +6,7 @@ const express = require('express');
 const router = express.Router();
 
 router.use('/', postController);
-router.use('/', userController);
+router.use('/api/users', userController);
 router.use('/', homeRoutes);
 
 module.exports = router;
