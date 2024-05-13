@@ -7,8 +7,6 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/connection');
-const userRoutes = require('./controllers/userController');
-const postRoutes = require('./controllers/postController');
 
 const app = express();
 // Specify on which port the Express.js server will run
