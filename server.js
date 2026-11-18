@@ -17,8 +17,13 @@ const hbs = exphbs.create({ helpers, partialsDir: path.join(__dirname, 'views/pa
 
 // Sets up session and connect to our Sequelize db
 // Configure and link a session object with the sequelize store
+if (!process.env.SESSION_SECRET) {
+  console.error('SESSION_SECRET is not set. Copy .env.example to .env');
+  process.exit(1);
+}
+
 const sess = {
-    secret: 'Super secret secret',
+    secret: process.env.SESSION_SECRET,
     cookie: {
         maxAge: 300000,  // Session expires after 300 seconds
         httpOnly: true,
